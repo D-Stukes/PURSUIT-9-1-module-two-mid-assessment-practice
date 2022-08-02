@@ -41,11 +41,19 @@ const characters = require('./swapi');
  *
  */
 
-function listAllCharacters() {}
+function listAllCharacters(characters) {
+
+  if(!characters.length) {throw "The array must contain at least one element"}
+ 
+  return characters.map((char) => char["name"])
+}
+
+
 
 //UNCOMMENT THE LINES ONE AT A TIME BELOW TO TEST YOUR SOLUTION MANUALLY, THEN COMMENT BACK IN
-// console.log(listAllCharacters([]));
-// console.log(listAllCharacters(characters));
+//console.log(listAllCharacters([]));
+//console.log(listAllCharacters(characters));
+
 
 //*************************************************************************************************/
 
@@ -61,7 +69,18 @@ function listAllCharacters() {}
  * No example for this one. You should be able to find the average at this point
  */
 
-function averageHeightOfAllCharacters() {}
+function averageHeightOfAllCharacters(characters) {
+  let allHeights = 0
+  let counter = 0
+  let  averageHeight
+  characters.forEach((char) => {
+    height = +char.height
+    allHeights += height
+    counter ++
+   })
+  return (allHeights/counter)
+
+}
 
 //UNCOMMENT THE LINES ONE AT A TIME BELOW TO TEST YOUR SOLUTION MANUALLY, THEN COMMENT BACK IN
 //console.log(averageHeightOfAllCharacters(characters))
@@ -98,11 +117,16 @@ function averageHeightOfAllCharacters() {}
  *
  */
 
-function checkForEyeColor() {}
+function checkForEyeColor(characters, eyes) {
+  if(!characters.length) {throw "The array must contain at least one element"}
+   
+  return characters.some((char) => char.eye_color === eyes)  //arrow function has an implict return when no curly brackets are included
+ 
+}
 
 //UNCOMMENT THE LINES ONE AT A TIME BELOW TO TEST YOUR SOLUTION MANUALLY, THEN COMMENT BACK IN
-// console.log(checkForEyeColor([]));
-// console.log(checkForEyeColor(characters, "blue-gray"));
+ //console.log(checkForEyeColor([]));
+//console.log(checkForEyeColor(characters, "blue-gray"));
 
 //*************************************************************************************************/
 
@@ -150,10 +174,17 @@ function checkForEyeColor() {}
  *
  */
 
-function getAllCharactersCreatedAfterYear() {}
+function getAllCharactersCreatedAfterYear(characters, date) {
+ // let arr = []
+ return characters.filter((char) => {
+  let year = char.created.slice(0,4)
+    if(year >= date)  
+    return char
+  })
+}
 
 //UNCOMMENT THE LINES ONE AT A TIME BELOW TO TEST YOUR SOLUTION MANUALLY, THEN COMMENT BACK IN
-// console.log(getAllCharactersCreatedAfterYear(characters, 2016));
+ //console.log(getAllCharactersCreatedAfterYear(characters, 2016));
 
 //*************************************************************************************************/
 
@@ -205,12 +236,20 @@ function getAllCharactersCreatedAfterYear() {}
    }
  */
 
-function getCharacterInMovie() {}
+function getCharacterInMovie(characters, movie) {
+if(!characters.length  ||  !movie.length) throw "Array must include at least one movie, and movie must include at least one character"
+
+return characters.find((char) => {
+ let movies = char.films
+  return movies.find((film) => film === movie)
+})
+
+}
 
 //UNCOMMENT THE LINES ONE AT A TIME BELOW TO TEST YOUR SOLUTION MANUALLY, THEN COMMENT BACK IN
-// console.log(getCharacterInMovie(characters, ''));
-// console.log(getCharacterInMovie([], 'The Phantom Menace'));
-// console.log(getCharacterInMovie(characters, 'The Phantom Menace'));
+//console.log(getCharacterInMovie(characters, ''));
+//console.log(getCharacterInMovie([], 'The Phantom Menace'));
+//console.log(getCharacterInMovie(characters, 'The Phantom Menace'));
 
 //*************************************************************************************************/
 // ****BONUS NO TESTS FOR THIS
@@ -225,10 +264,18 @@ function getCharacterInMovie() {}
  *  @returns {Array[]}} - returns an array of arrays.
  */
 
-function homeWorldValues() {}
+function homeWorldValues(characters) {
+let insideArray = []
+let outsideArray = []
+
+const goldenEyes = characters.filter(({eye_color}) => eye_color === "yellow")
+    insideArray = goldenEyes.forEach((obj) => Object.values(obj), outsideArray)
+    outsideArray.push(insideArray)
+    return  outsideArray
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION MANUALLY, THEN COMMENT BACK IN
-console.log(homeWorldValues(characters));
+//console.log(homeWorldValues(characters));
 
 //*************************************************************************************************/
 // ****SECOND BONUS
